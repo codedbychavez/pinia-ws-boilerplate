@@ -8,8 +8,8 @@ import {storeToRefs} from 'pinia';
 import { useCartStore } from '@/stores/CartStore';
 import { useProductStore } from '@/stores/ProductStore';
 
-const {items} = storeToRefs(useCartStore());
-const {products} = storeToRefs(useProductStore());
+const cartStore = useCartStore();
+const productStore = useProductStore();
 
 // data
 const active = ref(false);
@@ -19,15 +19,15 @@ const active = ref(false);
     <!-- Icon that always shows -->
     <span class="cursor-pointer" @click="active = true">
       <fa icon="shopping-cart" size="lg" class="text-gray-700" />
-      <div class="cart-count absolute">10</div>
+      <div class="cart-count absolute">{{ cartStore.count }}</div>
     </span>
     <!-- Modal Overlay only shows when cart is clicked on -->
     <AppModalOverlay :active="active" @close="active = false">
       <div>
         <ul class="items-in-cart">
           <CartItem
-            v-for="item in items"
-            :product="products.find((p) => item.id === p.id)"
+            v-for="item in cartStore.items"
+            :product="productStore.products.find((p) => item.id === p.id)"
             :count="item.count"
             @updateCount=""
             @clear=""
@@ -42,7 +42,7 @@ const active = ref(false);
         </div>
       </div>
       <!-- Uncomment and use condition to show when cart is empty -->
-      <!-- <div><em>Cart is Empty</em></div> -->
+      <div v-if="cartStore.isEmpty"><em>Cart is Empty</em></div>
     </AppModalOverlay>
   </div>
 </template>
