@@ -1,7 +1,14 @@
 <script setup>
 import TheHeader from "@/components/TheHeader.vue";
 import ProductCard from "@/components/ProductCard.vue";
-import products from "@/data/products.json";
+import { storeToRefs } from "pinia";
+
+// Product Store
+import { useProductStore } from '@/stores/ProductStore';
+
+const { products } = storeToRefs(useProductStore());
+
+
 </script>
 
 <template>
