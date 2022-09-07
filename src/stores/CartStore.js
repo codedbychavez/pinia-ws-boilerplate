@@ -3,14 +3,14 @@ import cartItems from "@/data/cart.json";
 
 export const useCartStore = defineStore('CartStore', {
   state: () => ({
-    items: cartItems,
+    items: [],
   }),
   getters: {
-    // getCart: (state) => state.Cart,
+    count: (state) => state.items.length,
   },
   actions: {
-    addCart() {
-      // this.Cart.push(1);
+    addItem(item) {
+      this.items.push(item);
     }
   }
 })

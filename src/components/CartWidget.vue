@@ -2,14 +2,14 @@
 // imports
 import { ref } from "vue";
 import CartItem from "./CartItem.vue";
-import products from "@/data/products.json";
+import {storeToRefs} from 'pinia';
 
 // Cart store
 import { useCartStore } from '@/stores/CartStore';
 import { useProductStore } from '@/stores/ProductStore';
 
-const cartStore = useCartStore();
-const productStore = useCartStore();
+const {items} = storeToRefs(useCartStore());
+const {products} = storeToRefs(useProductStore());
 
 // data
 const active = ref(false);
@@ -26,7 +26,7 @@ const active = ref(false);
       <div>
         <ul class="items-in-cart">
           <CartItem
-            v-for="item in cartStore.items"
+            v-for="item in items"
             :product="products.find((p) => item.id === p.id)"
             :count="item.count"
             @updateCount=""
